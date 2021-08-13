@@ -1,6 +1,8 @@
 package main
 
 import (
+	"ljtTest/myProject/db"
+	"ljtTest/myProject/model"
 	"ljtTest/myProject/router"
 	"log"
 	"net/http"
@@ -12,8 +14,10 @@ var (
 	g errgroup.Group
 )
 func main() {
+
+	db.InitTable(&model.DemoOrder{})
 	server01 := &http.Server{
-		Addr:              ":9000",
+		Addr:              ":8000",
 		Handler:           router.Router01(),
 		TLSConfig:         nil,
 		ReadTimeout:       5*time.Second,
@@ -28,7 +32,7 @@ func main() {
 		ConnContext:       nil,
 	}
 	server02 := &http.Server{
-		Addr:              "9090",
+		Addr:              ":9111",
 		Handler:           router.Router02(),
 		TLSConfig:         nil,
 		ReadTimeout:       5*time.Second,
@@ -54,4 +58,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 }
