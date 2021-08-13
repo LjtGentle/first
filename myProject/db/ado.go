@@ -159,7 +159,7 @@ func FindByOrderNo(orderNo string,value interface{}) (err error){
 	}
 	defer db.Close()
 
-	result := db.Debug().Where("orderno=?",orderNo).Find(value)
+	result := db.Debug().Where("order_no=?",orderNo).Find(value)
 	if result.Error != nil{
 		err = result.Error
 	}
@@ -187,7 +187,7 @@ func FindAll(values *[]model.DemoOrder)(sum int, err error) {
 
 //模糊查询
 //按大概的创建时间查询
-func FindAboutCreateTime(demos []model.DemoOrder,time string)(err error) {
+func FindAboutCreateTime(demos *[]model.DemoOrder,time string)(err error) {
 	db, err := gorm.Open("mysql",conStr)
 	if err != nil{
 		panic(err)
@@ -203,7 +203,7 @@ func FindAboutCreateTime(demos []model.DemoOrder,time string)(err error) {
 
 //条件查询
 //根据创建的时间排序查询
-func OrderCreateTime(demos []model.DemoOrder,isDesc bool)(err error ) {
+func OrderCreateTime(demos *[]model.DemoOrder,isDesc bool)(err error ) {
 	db, err := gorm.Open("mysql",conStr)
 	if err != nil{
 		panic(err)
@@ -220,7 +220,7 @@ func OrderCreateTime(demos []model.DemoOrder,isDesc bool)(err error ) {
 	return
 }
 //金额排序查询
-func OrderAmount(demos []model.DemoOrder,isDesc bool)(err error ) {
+func OrderAmount(demos *[]model.DemoOrder,isDesc bool)(err error ) {
 	db, err := gorm.Open("mysql",conStr)
 	if err != nil{
 		panic(err)
@@ -238,7 +238,7 @@ func OrderAmount(demos []model.DemoOrder,isDesc bool)(err error ) {
 }
 
 //金币排名前几或是后几名
-func OrderAmountRank(demos []model.DemoOrder,limit int, isDesc bool)(err error) {
+func OrderAmountRank(demos *[]model.DemoOrder,limit int, isDesc bool)(err error) {
 	db, err := gorm.Open("mysql",conStr)
 	if err != nil{
 		panic(err)

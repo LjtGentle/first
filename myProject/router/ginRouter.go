@@ -20,6 +20,14 @@ func Router01()http.Handler {
 	r.PUT("/update/amount",handler.UpdateAount)
 	r.PUT("/update/status",handler.UpdateStatus)
 
+	showGroup := r.Group("/show")
+	{
+		showGroup.GET("/times",handler.ShowJinZhuByTime) //模糊时间
+		showGroup.GET("/moneny",handler.ShowJinZhuByMoneny)
+		showGroup.GET("/rankmoney",handler.ShowJinZhuByMonenyRank)
+		showGroup.GET("/orderno",handler.ShowJinZhuByOrderNo)
+		showGroup.GET("/time",handler.ShowJinZhuByOrderTime) //创建时间排序
+	}
 	return r
 }
 
@@ -34,3 +42,4 @@ func Router02() http.Handler {
 	r.GET("/downloads",handler.DownLoadAll)
 	return r
 }
+

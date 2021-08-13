@@ -175,7 +175,7 @@ func UpdateStatus(c *gin.Context) {
 
 }
 
-//下载
+//下载上传金主上传的文件
 func DownLoad(c *gin.Context) {
 	id := c.Param("id")
 
@@ -208,7 +208,6 @@ func DownLoad(c *gin.Context) {
 	c.Header("Content-Transfer-Encoding", "binary")
 	c.File(demo.FileUrl)
 }
-
 
 //下载全部金主的信息
 func DownLoadAll(c *gin.Context) {
@@ -281,7 +280,6 @@ func DownLoadAll(c *gin.Context) {
 		cell.Value = value.FileUrl
 	}
 
-	fmt.Println("DownLoadAll=--------------33333")
 	//保存到服务器本地
 	path := "jinzhus.xlsx"
 	err = filex.Save(path)
@@ -298,4 +296,116 @@ func DownLoadAll(c *gin.Context) {
 	c.Header("Content-Disposition", "attachment; filename="+"message.xlsx")
 	c.Header("Content-Transfer-Encoding", "binary")
 	c.File(path)
+}
+
+//根据创建的时间返回json网页
+func ShowJinZhuByTime( c *gin.Context) {
+	time := c.PostForm("time")
+	demos := make([]model.DemoOrder,100)
+	err := db.FindAboutCreateTime(&demos,time)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError,gin.H{
+			"errMessage":err.Error(),
+		})
+
+	}else {
+		//这里是展示map的
+		//怎么将[]demo 转成map
+		demomap := make(map[string]interface{})
+		for i, v := range demos {
+			demomap[fmt.Sprintf("%#v",i)] = v
+		}
+		c.JSON(http.StatusOK,demomap)
+	}
+
+}
+//展示所有金主的信息通过金钱排序 返回json
+func ShowJinZhuByMoneny(c *gin.Context) {
+	flag := c.PostForm("flag")
+	var b bool
+	if flag != "desc" {
+		b = true
+	}
+	demos := make([]model.DemoOrder,100)
+	err :=  db.OrderAmount(&demos,b)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError,gin.H{
+			"errMessage":err.Error(),
+		})
+	} else {
+		demomap := make(map[string]interface{})
+		for i, v := range demos {
+			demomap[fmt.Sprintf("%#v",i)] = v
+		}
+		c.JSON(http.StatusOK,demomap)
+	}
+
+}
+//展示金主排名前几的 json
+func ShowJinZhuByMonenyRank(c *gin.Context) {
+	demos := make([]model.DemoOrder,100)
+	flag := c.PostForm("flag")
+	limit := c.PostForm("limit")
+	var b bool
+	if flag != "desc" {
+		b = true
+	}
+	ilmit ,err := strconv.ParseInt(limit,10,64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest,gin.H{
+			"errMessage":err.Error(),
+		})
+		return
+	}
+	err = db.OrderAmountRank(&demos,int(ilmit),b)
+	if err != nil{
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"errMessage":err.Error(),
+		})
+	}else{
+		demomap := make(map[string]interface{})
+		for i, v := range demos {
+			demomap[fmt.Sprintf("%#v",i)] = v
+		}
+		c.JSON(http.StatusOK,demomap)
+	}
+
+}
+
+//根据订单号查询 返回json
+func ShowJinZhuByOrderNo(c *gin.Context) {
+	no := c.PostForm("no")
+	demo := model.DemoOrder{}
+	err := db.FindByOrderNo(no,&demo)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError,gin.H{
+			"errMessage":err.Error(),
+		})
+	}else {
+		c.JSON(200,gin.H{
+			fmt.Sprintf("%#v",demo.ID):demo,
+		})
+	}
+}
+
+//根据创建的时间排序 返回json
+func ShowJinZhuByOrderTime(c *gin.Context) {
+	flag := c.PostForm("flag")
+	var b bool
+	if flag == "desc" {
+		b = true
+	}
+	demos := make([]model.DemoOrder,100)
+	err := db.OrderCreateTime(&demos,b)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError,gin.H{
+			"errMessage": err.Error(),
+		})
+	}else{
+		demomap := make(map[string]interface{})
+		for i, v := range demos {
+			demomap[fmt.Sprintf("%#v",i)] = v
+		}
+		c.JSON(http.StatusOK,demomap)
+	}
 }
