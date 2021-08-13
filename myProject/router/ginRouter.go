@@ -16,7 +16,10 @@ func Router01()http.Handler {
 	r := gin.Default()
 	//创建金主，form表单
 	r.POST("/create",handler.CreateDemo)
+	//更新
 	r.PUT("/update/amount",handler.UpdateAount)
+	r.PUT("/update/status",handler.UpdateStatus)
+
 	return r
 }
 
@@ -25,7 +28,9 @@ func Router01()http.Handler {
 //用于上传or下载
 func Router02() http.Handler {
 	r := gin.Default()
-	r.GET("/upload/:username",handler.UpLoad)
+	r.POST("/upload/:username",handler.UpLoad)
+	r.GET("/download/:id",handler.DownLoad)
 
+	r.GET("/downloads",handler.DownLoadAll)
 	return r
 }

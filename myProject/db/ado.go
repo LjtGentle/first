@@ -1,6 +1,9 @@
 package db
 
 import (
+	"fmt"
+	_"fmt"
+	_"fmt"
 	_"github.com/jinzhu/gorm/dialects/mysql" //mysql驱动
 	"github.com/jinzhu/gorm"
 	"ljtTest/myProject/model"
@@ -14,7 +17,7 @@ func init() {
 }
 
 //自动迁移
-func initTable(values ...interface{}) (err error) {
+func InitTable(value interface{}) (err error) {
 	db, err := gorm.Open("mysql",conStr)
 	if err != nil{
 		panic(err)
@@ -22,7 +25,7 @@ func initTable(values ...interface{}) (err error) {
 	}
 	defer db.Close()
 
-	result := db.AutoMigrate(values)
+	result := db.Debug().AutoMigrate(value)
 	if result.Error != nil {
 		err = result.Error
 	}
@@ -38,7 +41,7 @@ func Create(value interface{})(err error){
 	}
 	defer db.Close()
 
- 	result := db.Create(value)
+	result := db.Debug().Create(value)
  	return result.Error
 }
 
@@ -52,7 +55,7 @@ func Creates(slice []interface{})(sum int , err error) {
 	defer db.Close()
 	sum = 0
 	for index, value := range slice {
-		result := db.Create(value)
+		result := db.Debug().Create(value)
 		if result.Error  != nil {
 			err = result.Error
 			sum = index  //出错的时候返回插入出错的slice下标
@@ -70,7 +73,7 @@ func UpdateByAmout(id uint, amount float64)(err error) {
 		return
 	}
 
-	result := db.Model(&model.DemoOrder{}).
+	result := db.Debug().Model(&model.DemoOrder{}).
 		Where("id=?",id).Update("amount",amount)
 	if result.Error != nil {
 		err = result.Error
@@ -86,7 +89,7 @@ func UpdateByStatus(id uint, status string) (err error) {
 		return
 	}
 
-	result := db.Model(&model.DemoOrder{}).
+	result := db.Debug().Model(&model.DemoOrder{}).
 		Where("id=?",id).Update("status",status)
 	if result.Error != nil {
 		err = result.Error
@@ -97,14 +100,16 @@ func UpdateByStatus(id uint, status string) (err error) {
 
 //更新file_url
 func UpdateByFileUrl(id uint, fileUrl string) (err error) {
+	// fmt.Println("come in UpdateByFileUrl")
+	// defer fmt.Println("out of UpdateByFileUrl")
 	db, err := gorm.Open("mysql",conStr)
 	if err != nil{
 		panic(err)
 		return
 	}
 
-	result := db.Model(&model.DemoOrder{}).
-		Where("id=?",id).Update("fileurl",fileUrl)
+	result := db.Debug().Model(&model.DemoOrder{}).
+		Where("id=?",id).Update("file_url",fileUrl)
 	if result.Error != nil {
 		err = result.Error
 	}
@@ -121,7 +126,7 @@ func FindByID(value interface{})(err error) {
 	}
 	defer db.Close()
 
-	result := db.Limit(1).Find(value)//根据id查数据
+	result := db.Debug().Limit(1).Find(value)//根据id查数据
 	if result.Error != nil{
 		err = result.Error
 	}
@@ -137,7 +142,7 @@ func FindByName(name string,value interface{})(err error) {
 	}
 	defer db.Close()
 
-	result := db.Where("username=?",name).Find(value)
+	result := db.Debug().Where("user_name=?",name).Find(value)
 	if result.Error != nil{
 		err = result.Error
 	}
@@ -154,7 +159,7 @@ func FindByOrderNo(orderNo string,value interface{}) (err error){
 	}
 	defer db.Close()
 
-	result := db.Where("orderno=?",orderNo).Find(value)
+	result := db.Debug().Where("orderno=?",orderNo).Find(value)
 	if result.Error != nil{
 		err = result.Error
 	}
@@ -163,15 +168,15 @@ func FindByOrderNo(orderNo string,value interface{}) (err error){
 
 //批量查询
 //查询全部
-func FindAll(values interface{})(sum int, err error) {
+func FindAll(values *[]model.DemoOrder)(sum int, err error) {
 	db, err := gorm.Open("mysql",conStr)
 	if err != nil{
 		panic(err)
 		return
 	}
 	defer db.Close()
-
-	result := db.Find(values)
+	result := db.Debug().Find(&values)
+	fmt.Println("FindAll->",values)
 	if result.Error != nil{
 		err = result.Error
 	}else{
@@ -191,7 +196,7 @@ func FindAboutCreateTime(demos []model.DemoOrder,time string)(err error) {
 	defer db.Close()
 
 	str := "%"+time+"%"
-	res := db.Where("created_at LIKE?",str).Find(&demos)
+	res := db.Debug().Where("created_at LIKE?",str).Find(&demos)
 	err = res.Error
 	return
 }
@@ -206,10 +211,10 @@ func OrderCreateTime(demos []model.DemoOrder,isDesc bool)(err error ) {
 	}
 	defer db.Close()
 	if isDesc {
-		Result := db.Order("created_at desc").Find(&demos) //降序
+		Result := db.Debug().Order("created_at desc").Find(&demos) //降序
 		err = Result.Error
 	}else {
-		Result := db.Order("created_at").Find(&demos) //升序
+		Result := db.Debug().Order("created_at").Find(&demos) //升序
 		err = Result.Error
 	}
 	return
@@ -223,10 +228,10 @@ func OrderAmount(demos []model.DemoOrder,isDesc bool)(err error ) {
 	}
 	defer db.Close()
 	if isDesc {
-		Result := db.Order("amount desc").Find(&demos) //降序
+		Result := db.Debug().Order("amount desc").Find(&demos) //降序
 		err = Result.Error
 	}else {
-		Result := db.Order("amount").Find(&demos) //升序
+		Result := db.Debug().Order("amount").Find(&demos) //升序
 		err = Result.Error
 	}
 	return
@@ -242,10 +247,10 @@ func OrderAmountRank(demos []model.DemoOrder,limit int, isDesc bool)(err error) 
 	defer db.Close()
 
 	if isDesc {
-		Result := db.Limit(limit).Order("amount desc").Find(&demos) //降序
+		Result := db.Debug().Limit(limit).Order("amount desc").Find(&demos) //降序
 		err = Result.Error
 	}else {
-		Result := db.Limit(limit).Order("amount").Find(&demos) //升序
+		Result := db.Debug().Limit(limit).Order("amount").Find(&demos) //升序
 		err = Result.Error
 	}
 	return
