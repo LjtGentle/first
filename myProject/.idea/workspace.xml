@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6d4f9d19-ed8e-4dba-86cf-7910b08b076d" name="Default Changelist" comment="">
+    <list default="true" id="6d4f9d19-ed8e-4dba-86cf-7910b08b076d" name="Default Changelist" comment="hj">
+      <change afterPath="$PROJECT_DIR$/db/ado_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handler/ganHandler_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/router/ginRouter_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/server_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../awesomeProject/testGin02/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../awesomeProject/testGin02/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/ado.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/ado.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/ginHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/ginHandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router/ginRouter.go" beforeDir="false" afterPath="$PROJECT_DIR$/router/ginRouter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/main.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,6 +58,22 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Test_CreateDemo in ljtTest/myProject/router" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="myProject" />
+      <working_directory value="$PROJECT_DIR$/router" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="ljtTest/myProject/router" />
+      <pattern value="^Test_CreateDemo$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.Test_CreateDemo in ljtTest/myProject/router" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />

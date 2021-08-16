@@ -3,13 +3,13 @@ package handler
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/tealeg/xlsx/v3"
 	"ljtTest/myProject/db"
 	"ljtTest/myProject/model"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
-	"github.com/tealeg/xlsx/v3"
 )
 
 //有问题的
@@ -43,10 +43,10 @@ func UpLoads(c *gin.Context) {
 func UpLoad(c *gin.Context) {
 	//从参数中获取
 	name := c.Param("username")
-	fmt.Println("name=",name)
+	//fmt.Println("name=",name)
 	//要先判断这个username是否在数据库中存在
 	var demo model.DemoOrder
-	err := db.FindByName(name,&demo)
+	err := db.JzAdo.FindByName(name,&demo)
 	if err != nil {
 		c.JSON(http.StatusBadRequest,gin.H{
 			"message":"use no exist",
@@ -71,7 +71,7 @@ func UpLoad(c *gin.Context) {
 	log.Println(file.Filename)
 	upLoadDir = upLoadDir+"/"+file.Filename
 	//修改金主的fileurl
-	err = db.UpdateByFileUrl(demo.ID,upLoadDir)
+	err = db.JzAdo.UpdateByFileUrl(demo.ID,upLoadDir)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":"update fileurl failed",
@@ -97,8 +97,9 @@ func CreateDemo(c *gin.Context) {
 	no := c.PostForm("no")
 	amount := c.PostForm("amount")
 	status := c.PostForm("status")
-
+	fmt.Println("amount=",amount)
 	f64, err :=	strconv.ParseFloat(amount,64)
+
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":err.Error(),
@@ -111,7 +112,7 @@ func CreateDemo(c *gin.Context) {
 		Amount:   f64,
 		Status:   status,
 	}
-	 err = db.Create(&demo)
+	 err = db.JzAdo.Create(&demo)
 	 if err != nil {
 		 c.JSON(http.StatusInternalServerError,gin.H{
 			 "message":err.Error(),
@@ -127,7 +128,7 @@ func CreateDemo(c *gin.Context) {
 
 //form表单传入数据aount id
 func UpdateAount(c *gin.Context) {
-	aount := c.PostForm("aount")
+	aount := c.PostForm("amount")
 	id := c.PostForm("id")
 	aountf64 ,err:= strconv.ParseFloat(aount,64)
 	idu64 ,err := strconv.ParseUint(id,10,64)
@@ -137,11 +138,11 @@ func UpdateAount(c *gin.Context) {
 		})
 		return
 	}
-
-	err = db.UpdateByAmout(uint(idu64),aountf64)
+	fmt.Printf("id :%#v, aount64:%#v\n",uint(idu64),aountf64)
+	err = db.JzAdo.UpdateByAmout(uint(idu64),aountf64)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
-			"errMessage":err.Error(),
+			"--errMessage":err.Error(),
 		})
 	}else{
 		c.JSON(http.StatusOK,gin.H{
@@ -162,7 +163,7 @@ func UpdateStatus(c *gin.Context) {
 		})
 		return
 	}
-	err = db.UpdateByStatus(uint(id64),status)
+	err = db.JzAdo.UpdateByStatus(uint(id64),status)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":err.Error(),
@@ -189,7 +190,7 @@ func DownLoad(c *gin.Context) {
 	//找到file_url
 	demo := model.DemoOrder{}
 	demo.ID = uint(id64)
-	err = db.FindByID(&demo)
+	err = db.JzAdo.FindByID(&demo)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":err.Error(),
@@ -223,7 +224,7 @@ func DownLoadAll(c *gin.Context) {
 	//把金主们全部读出来
 	//demos := make([]*model.DemoOrder,100)
 	var demos []model.DemoOrder
-	_, err= db.FindAll(&demos)
+	_, err= db.JzAdo.FindAll(&demos)
 	fmt.Println("DownLoadAll->",demos)
 	if err !=  nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
@@ -302,7 +303,7 @@ func DownLoadAll(c *gin.Context) {
 func ShowJinZhuByTime( c *gin.Context) {
 	time := c.PostForm("time")
 	demos := make([]model.DemoOrder,100)
-	err := db.FindAboutCreateTime(&demos,time)
+	err := db.JzAdo.FindAboutCreateTime(&demos,time)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":err.Error(),
@@ -323,11 +324,11 @@ func ShowJinZhuByTime( c *gin.Context) {
 func ShowJinZhuByMoneny(c *gin.Context) {
 	flag := c.PostForm("flag")
 	var b bool
-	if flag != "desc" {
+	if flag == "desc" {
 		b = true
 	}
 	demos := make([]model.DemoOrder,100)
-	err :=  db.OrderAmount(&demos,b)
+	err :=  db.JzAdo.OrderAmount(&demos,b)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":err.Error(),
@@ -347,7 +348,7 @@ func ShowJinZhuByMonenyRank(c *gin.Context) {
 	flag := c.PostForm("flag")
 	limit := c.PostForm("limit")
 	var b bool
-	if flag != "desc" {
+	if flag == "desc" {
 		b = true
 	}
 	ilmit ,err := strconv.ParseInt(limit,10,64)
@@ -357,7 +358,7 @@ func ShowJinZhuByMonenyRank(c *gin.Context) {
 		})
 		return
 	}
-	err = db.OrderAmountRank(&demos,int(ilmit),b)
+	err = db.JzAdo.OrderAmountRank(&demos,int(ilmit),b)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"errMessage":err.Error(),
@@ -376,7 +377,7 @@ func ShowJinZhuByMonenyRank(c *gin.Context) {
 func ShowJinZhuByOrderNo(c *gin.Context) {
 	no := c.PostForm("no")
 	demo := model.DemoOrder{}
-	err := db.FindByOrderNo(no,&demo)
+	err := db.JzAdo.FindByOrderNo(no,&demo)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":err.Error(),
@@ -396,7 +397,7 @@ func ShowJinZhuByOrderTime(c *gin.Context) {
 		b = true
 	}
 	demos := make([]model.DemoOrder,100)
-	err := db.OrderCreateTime(&demos,b)
+	err := db.JzAdo.OrderCreateTime(&demos,b)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage": err.Error(),

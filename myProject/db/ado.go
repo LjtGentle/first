@@ -9,16 +9,20 @@ import (
 	"ljtTest/myProject/model"
 )
 
-var conStr string
 
+type JinZhuAdo struct {
+	ConStr string
+}
+
+var JzAdo JinZhuAdo
 
 func init() {
-	conStr = "root:123456@(localhost)/TEST?charset=utf8mb4&parseTime=True&loc=Local"
+	JzAdo.ConStr= "root:123456@(localhost)/TEST?charset=utf8mb4&parseTime=True&loc=Local"
 }
 
 //自动迁移
-func InitTable(value interface{}) (err error) {
-	db, err := gorm.Open("mysql",conStr)
+func (jinZhuAdo *JinZhuAdo) InitTable(value interface{}) (err error) {
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return
@@ -32,9 +36,9 @@ func InitTable(value interface{}) (err error) {
 	return
 }
 
-//新建一个记录
-func Create(value interface{})(err error){
-	db, err := gorm.Open("mysql",conStr)
+//新建一个记录 --test
+func (jinZhuAdo *JinZhuAdo)Create(value interface{})(err error){
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return
@@ -45,17 +49,17 @@ func Create(value interface{})(err error){
  	return result.Error
 }
 
-//批量新建
-func Creates(slice []interface{})(sum int , err error) {
-	db, err := gorm.Open("mysql",conStr)
+//批量新建 --test
+func (jinZhuAdo *JinZhuAdo)Creates(slice *[]model.DemoOrder)(sum int , err error) {
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return
 	}
 	defer db.Close()
 	sum = 0
-	for index, value := range slice {
-		result := db.Debug().Create(value)
+	for index, value := range *slice {
+		result := db.Debug().Create(&value)
 		if result.Error  != nil {
 			err = result.Error
 			sum = index  //出错的时候返回插入出错的slice下标
@@ -65,9 +69,9 @@ func Creates(slice []interface{})(sum int , err error) {
 	}
 	return
 }
-//更新amount
-func UpdateByAmout(id uint, amount float64)(err error) {
-	db, err := gorm.Open("mysql",conStr)
+//更新amount --test
+func (jinZhuAdo *JinZhuAdo)UpdateByAmout(id uint, amount float64)(err error) {
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return
@@ -81,9 +85,9 @@ func UpdateByAmout(id uint, amount float64)(err error) {
 	return
 }
 
-//更新status
-func UpdateByStatus(id uint, status string) (err error) {
-	db, err := gorm.Open("mysql",conStr)
+//更新status --test
+func (jinZhuAdo *JinZhuAdo)UpdateByStatus(id uint, status string) (err error) {
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return
@@ -98,11 +102,11 @@ func UpdateByStatus(id uint, status string) (err error) {
 }
 
 
-//更新file_url
-func UpdateByFileUrl(id uint, fileUrl string) (err error) {
+//更新file_url --test
+func(jinZhuAdo *JinZhuAdo) UpdateByFileUrl(id uint, fileUrl string) (err error) {
 	// fmt.Println("come in UpdateByFileUrl")
 	// defer fmt.Println("out of UpdateByFileUrl")
-	db, err := gorm.Open("mysql",conStr)
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return
@@ -117,9 +121,9 @@ func UpdateByFileUrl(id uint, fileUrl string) (err error) {
 }
 
 
-//根据id查询
-func FindByID(value interface{})(err error) {
-	db, err := gorm.Open("mysql",conStr)
+//根据id查询 --test
+func (jinZhuAdo *JinZhuAdo)FindByID(value interface{})(err error) {
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return
@@ -133,9 +137,9 @@ func FindByID(value interface{})(err error) {
 	return
 }
 
-//根据UserName查询
-func FindByName(name string,value interface{})(err error) {
-	db, err := gorm.Open("mysql",conStr)
+//根据UserName查询 --test
+func (jinZhuAdo *JinZhuAdo)FindByName(name string,value interface{})(err error) {
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return
@@ -150,9 +154,9 @@ func FindByName(name string,value interface{})(err error) {
 }
 
 
-//根据订单号查询
-func FindByOrderNo(orderNo string,value interface{}) (err error){
-	db, err := gorm.Open("mysql",conStr)
+//根据订单号查询 --test
+func (jinZhuAdo *JinZhuAdo)FindByOrderNo(orderNo string,value interface{}) (err error){
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return
@@ -167,9 +171,9 @@ func FindByOrderNo(orderNo string,value interface{}) (err error){
 }
 
 //批量查询
-//查询全部
-func FindAll(values *[]model.DemoOrder)(sum int, err error) {
-	db, err := gorm.Open("mysql",conStr)
+//查询全部 --test
+func (jinZhuAdo *JinZhuAdo)FindAll(values *[]model.DemoOrder)(sum int, err error) {
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return
@@ -186,9 +190,9 @@ func FindAll(values *[]model.DemoOrder)(sum int, err error) {
 }
 
 //模糊查询
-//按大概的创建时间查询
-func FindAboutCreateTime(demos *[]model.DemoOrder,time string)(err error) {
-	db, err := gorm.Open("mysql",conStr)
+//按大概的创建时间查询 --test
+func (jinZhuAdo *JinZhuAdo)FindAboutCreateTime(demos *[]model.DemoOrder,time string)(err error) {
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return
@@ -202,9 +206,9 @@ func FindAboutCreateTime(demos *[]model.DemoOrder,time string)(err error) {
 }
 
 //条件查询
-//根据创建的时间排序查询
-func OrderCreateTime(demos *[]model.DemoOrder,isDesc bool)(err error ) {
-	db, err := gorm.Open("mysql",conStr)
+//根据创建的时间排序查询 --test
+func (jinZhuAdo *JinZhuAdo)OrderCreateTime(demos *[]model.DemoOrder,isDesc bool)(err error ) {
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return
@@ -219,9 +223,9 @@ func OrderCreateTime(demos *[]model.DemoOrder,isDesc bool)(err error ) {
 	}
 	return
 }
-//金额排序查询
-func OrderAmount(demos *[]model.DemoOrder,isDesc bool)(err error ) {
-	db, err := gorm.Open("mysql",conStr)
+//金额排序查询 ---test
+func (jinZhuAdo *JinZhuAdo)OrderAmount(demos *[]model.DemoOrder,isDesc bool)(err error ) {
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return
@@ -237,9 +241,9 @@ func OrderAmount(demos *[]model.DemoOrder,isDesc bool)(err error ) {
 	return
 }
 
-//金币排名前几或是后几名
-func OrderAmountRank(demos *[]model.DemoOrder,limit int, isDesc bool)(err error) {
-	db, err := gorm.Open("mysql",conStr)
+//金币排名前几或是后几名 --test
+func(jinZhuAdo *JinZhuAdo) OrderAmountRank(demos *[]model.DemoOrder,limit int, isDesc bool)(err error) {
+	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
 		return

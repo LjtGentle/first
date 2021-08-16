@@ -1,21 +1,20 @@
 package main
 
 import (
+	"golang.org/x/sync/errgroup"
 	"ljtTest/myProject/db"
 	"ljtTest/myProject/model"
 	"ljtTest/myProject/router"
 	"log"
 	"net/http"
 	"time"
-	"golang.org/x/sync/errgroup"
 )
 
 var (
 	g errgroup.Group
 )
 func main() {
-
-	db.InitTable(&model.DemoOrder{})
+	db.JzAdo.InitTable(&model.DemoOrder{})
 	server01 := &http.Server{
 		Addr:              ":8000",
 		Handler:           router.Router01(),
