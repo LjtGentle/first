@@ -2,18 +2,16 @@ package router
 
 import (
 	"bytes"
-	"io"
-	"os"
-	"path/filepath"
-
 	"encoding/json"
-
 	"github.com/stretchr/testify/assert"
+	"io"
+	"io/ioutil"
 	"ljtTest/myProject/model"
 	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
-
+	"os"
+	"path/filepath"
 	"testing"
 )
 
@@ -383,34 +381,35 @@ func Test_ShowJinZhuByOrderTime(t *testing.T) {
 //
 func Test_UpLoad(t *testing.T) {
 	router := Router02()
-	//要上传的文件路径
-	path := "/home/weilijie/loading/test.txt"
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+	path := "/home/weilijie/loading/jack2/test.txt" //要上传的文件路径
+
+	//writer.WriteField("username","Gentle1") //from表单的另一个值
+	part, err := writer.CreateFormFile("file",filepath.Base(path))
+	if err != nil {
+		t.Error("call writer.CreateFormFile err=",err)
+	}
 	file, err := os.Open(path)
 	if err != nil {
 		t.Error("call os.Open err=",err)
 		return
 	}
 	defer file.Close()
-	body := &bytes.Buffer{}
-	writer := multipart.NewWriter(body)
-
-	part, err := writer.CreateFormFile("Gentle_file",filepath.Base(path))
-
-	if err != nil {
-		t.Error("call writer.CreateFormFile err=",err)
-	}
 	defer writer.Close()
 	io.Copy(part,file)
+	// writer.CreateFormField("file")
+	// writer.WriteField("file",filepath.Base(path))
+	// writer.WriteField("username","Gentle")
 
-
-
-	//发出请求
-	req ,err := http.NewRequest(http.MethodPost,"http://127.0.0.1:8080/upload/Gentle",body)
+	// 发出请求
+	req ,err := http.NewRequest(http.MethodPost,"http://127.0.0.1:9111/upload/Gentle",body)
 	if err != nil {
 		t.Error("call http.NewRequest err=",err)
 		return
 	}
-
+	//req.Body=ioutil.NopCloser(body)go get github.com/go-delve/delve/cmd/dlv
+	req.Header.Set("Content-Type",writer.FormDataContentType())
 	w := httptest.NewRecorder()
 	router.ServeHTTP(w,req)
 	//判断返回的错误码
@@ -418,9 +417,56 @@ func Test_UpLoad(t *testing.T) {
 
 
 }
+
+func Test_UpLoad2 (t *testing.T) {
+	bodyBuf := &bytes.Buffer{}
+	bodyWriter := multipart.NewWriter(bodyBuf)
+	filename := "/home/weilijie/loading/jack2/test.txt"
+	// 关键的一步操作
+	fileWriter, err := bodyWriter.CreateFormFile("file", filename)
+	if err != nil {
+
+	}
+
+	// 打开文件句柄操作
+	fh, err := os.Open(filename)
+	if err != nil {
+
+	}
+	defer fh.Close()
+
+	// iocopy
+	_, err = io.Copy(fileWriter, fh)
+	if err != nil {
+
+		contentType := bodyWriter.FormDataContentType()
+		bodyWriter.Close()
+
+		targetUrl := "127.0.0.1:9111/upload"
+		resp, err := http.Post(targetUrl, contentType, bodyBuf)
+		if err != nil {
+
+		}
+		defer resp.Body.Close()
+		resp_body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+
+		}
+		t.Error("resp.Status=", resp.Status)
+		t.Error("resp_body=", string(resp_body))
+
+	}
+
+}
+
+
+
+
+
 func Test_DownLoad(t *testing.T) {
 
 }
+
 func Test_DownLoadAll(t *testing.T) {
 
 }

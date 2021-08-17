@@ -53,7 +53,8 @@ func UpLoad(c *gin.Context) {
 		})
 		return
 	}
-	//金主文件夹，没有就创建
+	//
+	//  金主文件夹，没有就创建
 	upLoadDir := "/home/weilijie/loading/"+name
 	_,err = os.Stat(upLoadDir)
 	if os.IsNotExist(err) {
