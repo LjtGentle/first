@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"github.com/stretchr/testify/assert"
 	"io"
-	"io/ioutil"
 	"ljtTest/myProject/model"
 	"mime/multipart"
 	"net/http"
@@ -417,50 +416,6 @@ func Test_UpLoad(t *testing.T) {
 
 
 }
-
-func Test_UpLoad2 (t *testing.T) {
-	bodyBuf := &bytes.Buffer{}
-	bodyWriter := multipart.NewWriter(bodyBuf)
-	filename := "/home/weilijie/loading/jack2/test.txt"
-	// 关键的一步操作
-	fileWriter, err := bodyWriter.CreateFormFile("file", filename)
-	if err != nil {
-
-	}
-
-	// 打开文件句柄操作
-	fh, err := os.Open(filename)
-	if err != nil {
-
-	}
-	defer fh.Close()
-
-	// iocopy
-	_, err = io.Copy(fileWriter, fh)
-	if err != nil {
-
-		contentType := bodyWriter.FormDataContentType()
-		bodyWriter.Close()
-
-		targetUrl := "127.0.0.1:9111/upload"
-		resp, err := http.Post(targetUrl, contentType, bodyBuf)
-		if err != nil {
-
-		}
-		defer resp.Body.Close()
-		resp_body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-
-		}
-		t.Error("resp.Status=", resp.Status)
-		t.Error("resp_body=", string(resp_body))
-
-	}
-
-}
-
-
-
 
 
 func Test_DownLoad(t *testing.T) {
