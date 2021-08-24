@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ebd240d1-8435-494f-97b4-902c18421e8a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../myProject/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../myProject/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../myProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../myProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../myProject/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../../myProject/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../myProject/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../../myProject/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../myProject/handler/ginHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/../../myProject/handler/ginHandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../myProject/router/ginRouter_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/../../myProject/router/ginRouter_test.go" afterDir="false" />
-    </list>
+    <list default="true" id="ebd240d1-8435-494f-97b4-902c18421e8a" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

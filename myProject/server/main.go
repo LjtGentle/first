@@ -2,9 +2,9 @@ package main
 
 import (
 	"golang.org/x/sync/errgroup"
-	"ljtTest/myProject/db"
-	"ljtTest/myProject/model"
-	"ljtTest/myProject/router"
+	"myProject/db"
+	"myProject/model"
+	"myProject/router"
 	"log"
 	"net/http"
 	"time"

@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"ljtTest/myProject/handler"
+	"myProject/handler"
 	"net/http"
 )
 

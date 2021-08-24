@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"github.com/stretchr/testify/assert"
 	"io"
-	"ljtTest/myProject/model"
+	"myProject/model"
 	"mime/multipart"
 	"net/http"
 	"net/http/httptest"

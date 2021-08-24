@@ -5,7 +5,7 @@ package db
 
 import (
 	"github.com/jinzhu/gorm"
-	"ljtTest/myProject/model"
+	"myProject/model"
 	"reflect"
 	"testing"
 	_"time"

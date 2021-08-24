@@ -2,8 +2,7 @@ package main
 
 
 import (
-	_"net/http"
-	_"net/http/httptest"
+
 	"testing"
 )
 

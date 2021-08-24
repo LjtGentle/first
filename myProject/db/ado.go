@@ -2,11 +2,9 @@ package db
 
 import (
 	"fmt"
-	_"fmt"
-	_"fmt"
-	_"github.com/jinzhu/gorm/dialects/mysql" //mysql驱动
 	"github.com/jinzhu/gorm"
-	"ljtTest/myProject/model"
+	_ "github.com/jinzhu/gorm/dialects/mysql" // mysql驱动
+	"myProject/model"
 )
 
 

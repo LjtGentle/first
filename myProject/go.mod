@@ -1,4 +1,4 @@
-module ljtTest/myProject
+module myProject
 
 go 1.14
 
