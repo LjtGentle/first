@@ -4,6 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// DemoOrder 的结构体
 type DemoOrder struct {
 	gorm.Model
 	OrderNo string  `gorm:"unique;not null"`//订单号 唯一且不为空

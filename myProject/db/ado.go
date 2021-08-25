@@ -6,24 +6,24 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql" // mysql驱动
 	"myProject/model"
 )
-
-
+// JinZhuAdo 用于存放链接数据库的字串
 type JinZhuAdo struct {
 	ConStr string
 }
 
+// JzAdo 定义一个全局的结构体变量
 var JzAdo JinZhuAdo
 
+// init 对全局结构体变量的字段赋值
 func init() {
 	JzAdo.ConStr= "root:123456@(localhost)/TEST?charset=utf8mb4&parseTime=True&loc=Local"
 }
 
-//自动迁移
+// InitTable 自动迁移字段
 func (jinZhuAdo *JinZhuAdo) InitTable(value interface{}) (err error) {
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 	defer db.Close()
 
@@ -34,12 +34,11 @@ func (jinZhuAdo *JinZhuAdo) InitTable(value interface{}) (err error) {
 	return
 }
 
-//新建一个记录 --test
+// Create 在数据库中新建一个金主的记录
 func (jinZhuAdo *JinZhuAdo)Create(value interface{})(err error){
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 	defer db.Close()
 
@@ -47,12 +46,11 @@ func (jinZhuAdo *JinZhuAdo)Create(value interface{})(err error){
  	return result.Error
 }
 
-//批量新建 --test
+// Creates 在数据库中批量新建金主
 func (jinZhuAdo *JinZhuAdo)Creates(slice *[]model.DemoOrder)(sum int , err error) {
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 	defer db.Close()
 	sum = 0
@@ -60,19 +58,19 @@ func (jinZhuAdo *JinZhuAdo)Creates(slice *[]model.DemoOrder)(sum int , err error
 		result := db.Debug().Create(&value)
 		if result.Error  != nil {
 			err = result.Error
-			sum = index  //出错的时候返回插入出错的slice下标
+			sum = index  // 出错的时候返回插入出错的slice下标
 			return
 		}
-		sum += int(result.RowsAffected) //正常的情况记录着插入记录的条数
+		sum += int(result.RowsAffected) // 正常的情况记录着插入记录的条数
 	}
 	return
 }
-//更新amount --test
+
+// UpdateByAmout 根据id更新数据库中amount字段
 func (jinZhuAdo *JinZhuAdo)UpdateByAmout(id uint, amount float64)(err error) {
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 
 	result := db.Debug().Model(&model.DemoOrder{}).
@@ -83,12 +81,11 @@ func (jinZhuAdo *JinZhuAdo)UpdateByAmout(id uint, amount float64)(err error) {
 	return
 }
 
-//更新status --test
+// UpdateByStatus 根据id更新数据库中status字段
 func (jinZhuAdo *JinZhuAdo)UpdateByStatus(id uint, status string) (err error) {
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 
 	result := db.Debug().Model(&model.DemoOrder{}).
@@ -100,18 +97,15 @@ func (jinZhuAdo *JinZhuAdo)UpdateByStatus(id uint, status string) (err error) {
 }
 
 
-//更新file_url --test
-func(jinZhuAdo *JinZhuAdo) UpdateByFileUrl(id uint, fileUrl string) (err error) {
-	// fmt.Println("come in UpdateByFileUrl")
-	// defer fmt.Println("out of UpdateByFileUrl")
+// UpdateByFileURL 根据id更新数据库中file_url字段
+func(jinZhuAdo *JinZhuAdo) UpdateByFileURL(id uint, fileURL string) (err error) {
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 
 	result := db.Debug().Model(&model.DemoOrder{}).
-		Where("id=?",id).Update("file_url",fileUrl)
+		Where("id=?",id).Update("file_url",fileURL)
 	if result.Error != nil {
 		err = result.Error
 	}
@@ -119,28 +113,26 @@ func(jinZhuAdo *JinZhuAdo) UpdateByFileUrl(id uint, fileUrl string) (err error) 
 }
 
 
-//根据id查询 --test
+// FindByID 根据id查询金主的全部信息
 func (jinZhuAdo *JinZhuAdo)FindByID(value interface{})(err error) {
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 	defer db.Close()
 
-	result := db.Debug().Limit(1).Find(value)//根据id查数据
+	result := db.Debug().Limit(1).Find(value) // 根据id查数据
 	if result.Error != nil{
 		err = result.Error
 	}
 	return
 }
 
-//根据UserName查询 --test
+// FindByName 根据UserName查询金主的详细信息
 func (jinZhuAdo *JinZhuAdo)FindByName(name string,value interface{})(err error) {
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 	defer db.Close()
 
@@ -151,13 +143,11 @@ func (jinZhuAdo *JinZhuAdo)FindByName(name string,value interface{})(err error) 
 	return
 }
 
-
-//根据订单号查询 --test
+// FindByOrderNo 根据订单号查询金主的详细信息
 func (jinZhuAdo *JinZhuAdo)FindByOrderNo(orderNo string,value interface{}) (err error){
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 	defer db.Close()
 
@@ -168,13 +158,11 @@ func (jinZhuAdo *JinZhuAdo)FindByOrderNo(orderNo string,value interface{}) (err 
 	return
 }
 
-//批量查询
-//查询全部 --test
+// FindAll 批量查询 查询全部金主的所有信息
 func (jinZhuAdo *JinZhuAdo)FindAll(values *[]model.DemoOrder)(sum int, err error) {
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 	defer db.Close()
 	result := db.Debug().Find(&values)
@@ -187,13 +175,11 @@ func (jinZhuAdo *JinZhuAdo)FindAll(values *[]model.DemoOrder)(sum int, err error
 	return
 }
 
-//模糊查询
-//按大概的创建时间查询 --test
+// FindAboutCreateTime 模糊查询 按大概的创建时间查询一些金主的全部信息
 func (jinZhuAdo *JinZhuAdo)FindAboutCreateTime(demos *[]model.DemoOrder,time string)(err error) {
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 	defer db.Close()
 
@@ -203,13 +189,11 @@ func (jinZhuAdo *JinZhuAdo)FindAboutCreateTime(demos *[]model.DemoOrder,time str
 	return
 }
 
-//条件查询
-//根据创建的时间排序查询 --test
+// OrderCreateTime 根据创建的时间排序查询一些金主的全部信息
 func (jinZhuAdo *JinZhuAdo)OrderCreateTime(demos *[]model.DemoOrder,isDesc bool)(err error ) {
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 	defer db.Close()
 	if isDesc {
@@ -221,12 +205,11 @@ func (jinZhuAdo *JinZhuAdo)OrderCreateTime(demos *[]model.DemoOrder,isDesc bool)
 	}
 	return
 }
-//金额排序查询 ---test
+// OrderAmount 根据金额排序查询一些金主的全部信息
 func (jinZhuAdo *JinZhuAdo)OrderAmount(demos *[]model.DemoOrder,isDesc bool)(err error ) {
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 	defer db.Close()
 	if isDesc {
@@ -239,12 +222,11 @@ func (jinZhuAdo *JinZhuAdo)OrderAmount(demos *[]model.DemoOrder,isDesc bool)(err
 	return
 }
 
-//金币排名前几或是后几名 --test
+// OrderAmountRank 金币排名前几或是后几名的一些金主的全部信息
 func(jinZhuAdo *JinZhuAdo) OrderAmountRank(demos *[]model.DemoOrder,limit int, isDesc bool)(err error) {
 	db, err := gorm.Open("mysql",jinZhuAdo.ConStr)
 	if err != nil{
 		panic(err)
-		return
 	}
 	defer db.Close()
 

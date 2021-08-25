@@ -2,10 +2,10 @@ package main
 
 import (
 	"golang.org/x/sync/errgroup"
+	"log"
 	"myProject/db"
 	"myProject/model"
 	"myProject/router"
-	"log"
 	"net/http"
 	"time"
 )

@@ -12,6 +12,8 @@ POST 	创建
 PUT 	更新
 DELETE 	删除
  */
+
+// Router01 服务1
 func Router01()http.Handler {
 	r := gin.Default()
 	//创建金主，form表单
@@ -33,7 +35,7 @@ func Router01()http.Handler {
 
 
 
-//用于上传or下载
+// Router02 服务2 用于上传or下载
 func Router02() http.Handler {
 	r := gin.Default()
 	r.POST("/upload/:username",handler.UpLoad)

@@ -4,18 +4,18 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/tealeg/xlsx/v3"
+	"log"
 	"myProject/db"
 	"myProject/model"
-	"log"
 	"net/http"
 	"os"
 	"strconv"
 )
 
-//有问题的
+// UpLoads 意图上传多个文件 有瑕疵
 func UpLoads(c *gin.Context) {
-	//从参数中获取
-	//name := c.Param("username")
+	// 从参数中获取
+	// name := c.Param("username")
 	form, err := c.MultipartForm()
 	if err != nil{
 		fmt.Println("UpLoads call MultipartForm() err=",err)
@@ -40,11 +40,11 @@ func UpLoads(c *gin.Context) {
 	})
 }
 
+// UpLoad 上传一个文件的路由函数
 func UpLoad(c *gin.Context) {
-	//从参数中获取
+	// 从参数中获取
 	name := c.Param("username")
-	//fmt.Println("name=",name)
-	//要先判断这个username是否在数据库中存在
+	// 要先判断这个username是否在数据库中存在
 	var demo model.DemoOrder
 	err := db.JzAdo.FindByName(name,&demo)
 	if err != nil {
@@ -71,15 +71,15 @@ func UpLoad(c *gin.Context) {
 	}
 	log.Println(file.Filename)
 	upLoadDir = upLoadDir+"/"+file.Filename
-	//修改金主的fileurl
-	err = db.JzAdo.UpdateByFileUrl(demo.ID,upLoadDir)
+	// 修改金主的fileURL
+	err = db.JzAdo.UpdateByFileURL(demo.ID,upLoadDir)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":"update fileurl failed",
 		})
 		return
 	}
-	//保存文件
+	// 保存文件
 	err = c.SaveUploadedFile(file,upLoadDir)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
@@ -92,7 +92,7 @@ func UpLoad(c *gin.Context) {
 	}
 }
 
-//form表单传参数创建金主
+// CreateDemo form表单传参数创建金主的路由函数
 func CreateDemo(c *gin.Context) {
 	name := c.PostForm("name")
 	no := c.PostForm("no")
@@ -127,7 +127,7 @@ func CreateDemo(c *gin.Context) {
 
 }
 
-//form表单传入数据aount id
+// UpdateAount form表单传入数据amount id 更新金主的amount
 func UpdateAount(c *gin.Context) {
 	aount := c.PostForm("amount")
 	id := c.PostForm("id")
@@ -152,7 +152,7 @@ func UpdateAount(c *gin.Context) {
 	}
 }
 
-//form表单传入数据 id status
+// UpdateStatus form表单传入数据 id status 更新金主的status
 func UpdateStatus(c *gin.Context) {
 	id := c.PostForm("id")
 	status := c.PostForm("status")
@@ -177,7 +177,7 @@ func UpdateStatus(c *gin.Context) {
 
 }
 
-//下载上传金主上传的文件
+// DownLoad 下载上传金主上传的文件
 func DownLoad(c *gin.Context) {
 	id := c.Param("id")
 
@@ -211,7 +211,7 @@ func DownLoad(c *gin.Context) {
 	c.File(demo.FileUrl)
 }
 
-//下载全部金主的信息
+// DownLoadAll 下载全部金主的信息 存放到一个excel表格
 func DownLoadAll(c *gin.Context) {
 	filex := xlsx.NewFile()
 	sheet,err := filex.AddSheet("金主们的全部信息")
@@ -300,7 +300,7 @@ func DownLoadAll(c *gin.Context) {
 	c.File(path)
 }
 
-//根据创建的时间返回json网页
+// ShowJinZhuByTime 根据创建的时间返回json网页
 func ShowJinZhuByTime( c *gin.Context) {
 	time := c.PostForm("time")
 	demos := make([]model.DemoOrder,100)
@@ -321,7 +321,8 @@ func ShowJinZhuByTime( c *gin.Context) {
 	}
 
 }
-//展示所有金主的信息通过金钱排序 返回json
+
+// ShowJinZhuByMoneny 展示所有金主的信息通过金钱排序 返回json
 func ShowJinZhuByMoneny(c *gin.Context) {
 	flag := c.PostForm("flag")
 	var b bool
@@ -343,7 +344,8 @@ func ShowJinZhuByMoneny(c *gin.Context) {
 	}
 
 }
-//展示金主排名前几的 json
+
+// ShowJinZhuByMonenyRank 展示金主排名前几的 json
 func ShowJinZhuByMonenyRank(c *gin.Context) {
 	demos := make([]model.DemoOrder,100)
 	flag := c.PostForm("flag")
@@ -374,7 +376,7 @@ func ShowJinZhuByMonenyRank(c *gin.Context) {
 
 }
 
-//根据订单号查询 返回json
+// ShowJinZhuByOrderNo 根据订单号查询 返回json
 func ShowJinZhuByOrderNo(c *gin.Context) {
 	no := c.PostForm("no")
 	demo := model.DemoOrder{}
@@ -390,7 +392,7 @@ func ShowJinZhuByOrderNo(c *gin.Context) {
 	}
 }
 
-//根据创建的时间排序 返回json
+// ShowJinZhuByOrderTime 根据创建的时间排序 返回json
 func ShowJinZhuByOrderTime(c *gin.Context) {
 	flag := c.PostForm("flag")
 	var b bool

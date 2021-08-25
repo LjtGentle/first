@@ -211,7 +211,7 @@ func Test_ShowJinZhuByMoney(t *testing.T) {
 	}
 
 	//处理返回值
-	for i,_ := range response {
+	for i := range response {
 		if i > 1 {
 			if response[i].Amount > response[i-1].Amount {
 				t.Errorf("上一个的Amount为：%#v, 当前的Amount为：%#v\n",response[i-1].Amount,response[i].Amount)
@@ -261,7 +261,7 @@ func Test_ShowJinZhuByMoneyRank(t *testing.T) {
 
 	//处理返回值
 	j := 0
-	for i,_ := range response {
+	for i:= range response {
 		j++
 		if i > 1 {
 			if response[i].Amount > response[i-1].Amount {
@@ -360,7 +360,7 @@ func Test_ShowJinZhuByOrderTime(t *testing.T) {
 
 	//处理返回值
 	j := 0
-	for i,_ := range response {
+	for i := range response {
 		j++
 		if i > 1 {
 			strTime1 :=response[i].CreatedAt.Format("2006-01-02 15:04:05")

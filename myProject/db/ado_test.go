@@ -145,7 +145,7 @@ func Test_updateStatus(t *testing.T) {
 
 //测试更新fileurl pass
 func Test_updateFileUrl(t *testing.T) {
-	err := JzAdo.UpdateByFileUrl(1,"/home")
+	err := JzAdo.UpdateByFileURL(1,"/home")
 	if err != nil {
 		t.Error("call UpdateByFileUrl err=",err)
 	}
@@ -220,7 +220,7 @@ func Test_OrderCreateTime(t *testing.T) {
 		t.Error("call OrderCreateTime desc err=",err)
 	}
 	//遍历比较时间
-	for i,_ := range demos {
+	for i := range demos {
 		if i>1 {
 			if  demos[i].CreatedAt.After(demos[i-1].CreatedAt){
 				t.Error("创建时间不是降序")
@@ -253,7 +253,7 @@ func Test_OrderAmount(t *testing.T) {
 		t.Error("call OrderAmount err=",err)
 	}
 	//降序 遍历
-	for i,_:= range demos {
+	for i:= range demos {
 		if i>1 {
 			if demos[i].Amount>demos[i-1].Amount {
 				t.Error("金额不是降序")
@@ -267,7 +267,7 @@ func Test_OrderAmount(t *testing.T) {
 	if err != nil {
 		t.Error("call OrderAmount err=",err)
 	}
-	for j,_ := range demos {
+	for j := range demos {
 		if j > 1 {
 			if demos[j].Amount<demos[j-1].Amount {
 				t.Error("金额不是降序")
@@ -289,7 +289,7 @@ func Test_OrderAmountRank( t *testing.T) {
 	if len(demos) != 5 {
 		t.Errorf("excepted:5,got:%#v\n",len(demos))
 	}
-	for i,_:=range demos {
+	for i:=range demos {
 		if i >1 {
 			if demos[i].Amount>demos[i-1].Amount {
 				t.Errorf("前一个为：%#v,当前为:%#v\n",demos[i-1].Amount,demos[i].Amount)
@@ -304,7 +304,7 @@ func Test_OrderAmountRank( t *testing.T) {
 	if len(demos) != 5 {
 		t.Errorf("excepted:5,got:%#v\n",len(demos))
 	}
-	for i,_:=range demos {
+	for i:=range demos {
 		if i >1 {
 			if demos[i].Amount<demos[i-1].Amount {
 				t.Errorf("前一个为：%#v,当前为:%#v\n",demos[i-1].Amount,demos[i].Amount)
