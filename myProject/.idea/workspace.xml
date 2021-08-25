@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6d4f9d19-ed8e-4dba-86cf-7910b08b076d" name="Default Changelist" comment="hj">
-      <change beforePath="$PROJECT_DIR$/../NewPocker/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../NewPocker/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/ado.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/ado.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/ado_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/ado_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/ginHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/ginHandler.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
