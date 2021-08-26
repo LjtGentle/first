@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6d4f9d19-ed8e-4dba-86cf-7910b08b076d" name="Default Changelist" comment="hj">
+      <change beforePath="$PROJECT_DIR$/../NewPocker/fire/fire.go" beforeDir="false" afterPath="$PROJECT_DIR$/../NewPocker/fire/fire.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../NewPocker/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../NewPocker/main/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../NewPocker/seven/seven.go" beforeDir="false" afterPath="$PROJECT_DIR$/../NewPocker/seven/seven.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../NewPocker/sevenJoker/seven_joker.go" beforeDir="false" afterPath="$PROJECT_DIR$/../NewPocker/sevenJoker/seven_joker.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/ado.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/ado.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/ado_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/ado_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -79,6 +88,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Debugger" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -92,38 +102,61 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.Test_UpLoad in ljtTest/myProject/router">
-    <configuration name="Test_CreateDemo in ljtTest/myProject/router" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.TestMockCreate in myProject/db">
+    <configuration name="go build ado.go (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="myProject" />
-      <working_directory value="$PROJECT_DIR$/router" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="ljtTest/myProject/router" />
-      <pattern value="^Test_CreateDemo$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Test_UpLoad in ljtTest/myProject/router" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="myProject" />
-      <working_directory value="$PROJECT_DIR$/router" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="ljtTest/myProject/router" />
-      <pattern value="^Test_UpLoad$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="ginRouter_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="myProject" />
-      <working_directory value="$PROJECT_DIR$/router" />
-      <framework value="gotest" />
+      <working_directory value="$PROJECT_DIR$" />
       <kind value="FILE" />
-      <filePath value="$PROJECT_DIR$/router/ginRouter_test.go" />
+      <filePath value="$PROJECT_DIR$/db/ado.go" />
+      <package value="myProject" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build ado_mock.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="myProject" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/db/ado_mock.go" />
+      <package value="myProject" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="myProject" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/server/main.go" />
+      <package value="myProject" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build myProject/server" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="myProject" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/server/main.go" />
+      <package value="myProject/server" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestMockCreate in myProject/db" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="myProject" />
+      <working_directory value="$PROJECT_DIR$/db" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="myProject/db" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestMockCreate$" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.Test_UpLoad in ljtTest/myProject/router" />
-        <item itemvalue="Go Test.ginRouter_test.go" />
-        <item itemvalue="Go Test.Test_CreateDemo in ljtTest/myProject/router" />
+        <item itemvalue="Go Test.TestMockCreate in myProject/db" />
+        <item itemvalue="Go Build.go build main.go" />
+        <item itemvalue="Go Build.go build ado_mock.go" />
+        <item itemvalue="Go Build.go build myProject/server" />
+        <item itemvalue="Go Build.go build ado.go (1)" />
       </list>
     </recent_temporary>
   </component>

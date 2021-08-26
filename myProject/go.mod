@@ -6,6 +6,7 @@ require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.1 // indirect
 	github.com/gin-gonic/gin v1.7.3
 	github.com/go-delve/delve v1.7.0 // indirect
+	github.com/golang/mock v1.5.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.13 // indirect

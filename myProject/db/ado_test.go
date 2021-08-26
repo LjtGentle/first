@@ -8,7 +8,7 @@ import (
 	"myProject/model"
 	"reflect"
 	"testing"
-	_"time"
+	_ "time"
 )
 
 //pass 测试了创建和按订单号查询
@@ -19,6 +19,9 @@ func Test_createandFindbyOrderNo(t *testing.T) {
 		Amount:771.88,
 		Status:"0",
 	}
+	JzAdo := NewJinZhuDao()
+	JzAdo.OpenMysql()
+	defer JzAdo.CloseMysql()
 	err :=  JzAdo.Create(&want)
 	if err != nil {
 		t.Errorf("call Create err=%#v",err)
@@ -74,6 +77,9 @@ func Test_creates(t *testing.T){
 			Amount:333.33,
 		},
 	}
+	JzAdo := NewJinZhuDao()
+	JzAdo.OpenMysql()
+	defer JzAdo.CloseMysql()
 	sum,err := JzAdo.Creates(&wants)
 	if err != nil {
 		t.Errorf("err=%#v\n",err)
@@ -104,7 +110,10 @@ func Test_creates(t *testing.T){
 //测试 更新金额和按id查询 pass
 func Test_DateByAmountAndFindById(t *testing.T) {
 	//更新金额
-	err := JzAdo.UpdateByAmout(9,999.99)
+	JzAdo := NewJinZhuDao()
+	JzAdo.OpenMysql()
+	defer JzAdo.CloseMysql()
+	err := JzAdo.UpdateByAmount(9,999.99)
 	if err != nil {
 		t.Error("call UpdateByAmout err=",err)
 	}
@@ -125,6 +134,9 @@ func Test_DateByAmountAndFindById(t *testing.T) {
 //测试更新状态 pass
 func Test_updateStatus(t *testing.T) {
 	//更状态
+	JzAdo := NewJinZhuDao()
+	JzAdo.OpenMysql()
+	defer JzAdo.CloseMysql()
 	err := JzAdo.UpdateByStatus(9,"99")
 	if err != nil {
 		t.Error("call UpdateByStatus err=",err)
@@ -145,6 +157,9 @@ func Test_updateStatus(t *testing.T) {
 
 //测试更新fileurl pass
 func Test_updateFileUrl(t *testing.T) {
+	JzAdo := NewJinZhuDao()
+	JzAdo.OpenMysql()
+	defer JzAdo.CloseMysql()
 	err := JzAdo.UpdateByFileURL(1,"/home")
 	if err != nil {
 		t.Error("call UpdateByFileUrl err=",err)
@@ -164,6 +179,9 @@ func Test_updateFileUrl(t *testing.T) {
 //测试查找全部 pass
 func Test_findAll(t *testing.T) {
 	demos := make([]model.DemoOrder,5)
+	JzAdo := NewJinZhuDao()
+	JzAdo.OpenMysql()
+	defer JzAdo.CloseMysql()
 	sum, err := JzAdo.FindAll(&demos)
 	if err != nil {
 		t.Error("call FindAll err=",err)
@@ -190,6 +208,9 @@ func Test_findAll(t *testing.T) {
 //测试创建的时间模糊查询 pass
 func Test_FindAboutCreateTime(t *testing.T) {
 	demos := make([]model.DemoOrder,5)
+	JzAdo := NewJinZhuDao()
+	JzAdo.OpenMysql()
+	defer JzAdo.CloseMysql()
 	err := JzAdo.FindAboutCreateTime(&demos,"2021-08-13")
 	if err != nil {
 		t.Error("call FindAboutCreateTime err =",err)
@@ -214,6 +235,9 @@ func Test_FindAboutCreateTime(t *testing.T) {
 //测试OrderCreateTime  pass
 func Test_OrderCreateTime(t *testing.T) {
 	demos := make([]model.DemoOrder,10)
+	JzAdo := NewJinZhuDao()
+	JzAdo.OpenMysql()
+	defer JzAdo.CloseMysql()
 	//降序
 	err:= JzAdo.OrderCreateTime(&demos,true)
 	if err != nil {
@@ -247,6 +271,9 @@ func Test_OrderCreateTime(t *testing.T) {
 
 //测试OrderAmount pass
 func Test_OrderAmount(t *testing.T) {
+	JzAdo := NewJinZhuDao()
+	JzAdo.OpenMysql()
+	defer JzAdo.CloseMysql()
 	demos := make([]model.DemoOrder,10)
 	err := JzAdo.OrderAmount(&demos,true)
 	if err != nil {
@@ -280,6 +307,9 @@ func Test_OrderAmount(t *testing.T) {
 
 //测试OrderAmountRank --pass
 func Test_OrderAmountRank( t *testing.T) {
+	JzAdo := NewJinZhuDao()
+	JzAdo.OpenMysql()
+	defer JzAdo.CloseMysql()
 	demos := make([]model.DemoOrder,5)
 	//降序
 	err := JzAdo.OrderAmountRank(&demos,5,true)
@@ -313,4 +343,5 @@ func Test_OrderAmountRank( t *testing.T) {
 	}
 
 }
+
 

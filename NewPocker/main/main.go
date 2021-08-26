@@ -7,7 +7,9 @@ import (
 )
 
 func main() {
+
+	fire.PokerMan()
 	seven.PokerMan()
 	sevenJoker.PokerMan()
-	fire.PokerMan()
+
 }

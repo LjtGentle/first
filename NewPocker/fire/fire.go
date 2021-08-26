@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"path"
+	"runtime"
 	"time"
 )
 
@@ -528,10 +530,20 @@ func (com *cardCom) threeAndTwoNew() (result int) {
 	}
 
 }
-
+// GetCurrentAbPathByCaller 得到项目的路径
+func GetCurrentAbPathByCaller() string {
+	var abPath string
+	_, filename, _, ok := runtime.Caller(0)
+	if ok {
+		abPath = path.Dir(filename)
+		abPath = path.Dir(abPath)
+	}
+	return abPath
+}
 // PokerMan 5张遍历判断 文件扑克牌的函数
 func PokerMan() {
-	file := "../resources/match_result.json"
+	file := GetCurrentAbPathByCaller()
+	file += "/resources/match_result.json"
 	alices, bobs, results := ReadFile(file)
 	t1 := time.Now()
 	k := 0

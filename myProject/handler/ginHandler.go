@@ -12,6 +12,7 @@ import (
 	"strconv"
 )
 
+
 // UpLoads 意图上传多个文件 有瑕疵
 func UpLoads(c *gin.Context) {
 	// 从参数中获取
@@ -46,7 +47,11 @@ func UpLoad(c *gin.Context) {
 	name := c.Param("username")
 	// 要先判断这个username是否在数据库中存在
 	var demo model.DemoOrder
-	err := db.JzAdo.FindByName(name,&demo)
+
+	JzAdo ,f:= db.NewJinZhuDao()
+	defer f()
+
+	err := JzAdo.FindByName(name,&demo)
 	if err != nil {
 		c.JSON(http.StatusBadRequest,gin.H{
 			"message":"use no exist",
@@ -72,7 +77,7 @@ func UpLoad(c *gin.Context) {
 	log.Println(file.Filename)
 	upLoadDir = upLoadDir+"/"+file.Filename
 	// 修改金主的fileURL
-	err = db.JzAdo.UpdateByFileURL(demo.ID,upLoadDir)
+	err = JzAdo.UpdateByFileURL(demo.ID,upLoadDir)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":"update fileurl failed",
@@ -113,7 +118,11 @@ func CreateDemo(c *gin.Context) {
 		Amount:   f64,
 		Status:   status,
 	}
-	 err = db.JzAdo.Create(&demo)
+
+	JzAdo ,f:= db.NewJinZhuDao()
+	defer f()
+
+	 err = JzAdo.Create(&demo)
 	 if err != nil {
 		 c.JSON(http.StatusInternalServerError,gin.H{
 			 "message":err.Error(),
@@ -139,8 +148,10 @@ func UpdateAount(c *gin.Context) {
 		})
 		return
 	}
-	fmt.Printf("id :%#v, aount64:%#v\n",uint(idu64),aountf64)
-	err = db.JzAdo.UpdateByAmout(uint(idu64),aountf64)
+	JzAdo ,f:= db.NewJinZhuDao()
+	defer f()
+
+	err = JzAdo.UpdateByAmount(uint(idu64),aountf64)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"--errMessage":err.Error(),
@@ -164,7 +175,11 @@ func UpdateStatus(c *gin.Context) {
 		})
 		return
 	}
-	err = db.JzAdo.UpdateByStatus(uint(id64),status)
+
+	JzAdo ,f:= db.NewJinZhuDao()
+	defer f()
+
+	err = JzAdo.UpdateByStatus(uint(id64),status)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":err.Error(),
@@ -191,7 +206,11 @@ func DownLoad(c *gin.Context) {
 	//找到file_url
 	demo := model.DemoOrder{}
 	demo.ID = uint(id64)
-	err = db.JzAdo.FindByID(&demo)
+
+	JzAdo ,f:= db.NewJinZhuDao()
+	defer f()
+
+	err = JzAdo.FindByID(&demo)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":err.Error(),
@@ -225,7 +244,11 @@ func DownLoadAll(c *gin.Context) {
 	//把金主们全部读出来
 	//demos := make([]*model.DemoOrder,100)
 	var demos []model.DemoOrder
-	_, err= db.JzAdo.FindAll(&demos)
+
+	JzAdo ,f:= db.NewJinZhuDao()
+	defer f()
+
+	_, err= JzAdo.FindAll(&demos)
 	fmt.Println("DownLoadAll->",demos)
 	if err !=  nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
@@ -304,7 +327,11 @@ func DownLoadAll(c *gin.Context) {
 func ShowJinZhuByTime( c *gin.Context) {
 	time := c.PostForm("time")
 	demos := make([]model.DemoOrder,100)
-	err := db.JzAdo.FindAboutCreateTime(&demos,time)
+
+	JzAdo ,f:= db.NewJinZhuDao()
+	defer f()
+
+	err := JzAdo.FindAboutCreateTime(&demos,time)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":err.Error(),
@@ -330,7 +357,10 @@ func ShowJinZhuByMoneny(c *gin.Context) {
 		b = true
 	}
 	demos := make([]model.DemoOrder,100)
-	err :=  db.JzAdo.OrderAmount(&demos,b)
+	JzAdo ,f:= db.NewJinZhuDao()
+	defer f()
+
+	err :=  JzAdo.OrderAmount(&demos,b)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":err.Error(),
@@ -361,7 +391,10 @@ func ShowJinZhuByMonenyRank(c *gin.Context) {
 		})
 		return
 	}
-	err = db.JzAdo.OrderAmountRank(&demos,int(ilmit),b)
+	JzAdo ,f:= db.NewJinZhuDao()
+	defer f()
+
+	err = JzAdo.OrderAmountRank(&demos,int(ilmit),b)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"errMessage":err.Error(),
@@ -380,7 +413,10 @@ func ShowJinZhuByMonenyRank(c *gin.Context) {
 func ShowJinZhuByOrderNo(c *gin.Context) {
 	no := c.PostForm("no")
 	demo := model.DemoOrder{}
-	err := db.JzAdo.FindByOrderNo(no,&demo)
+	JzAdo ,f:= db.NewJinZhuDao()
+	defer f()
+
+	err := JzAdo.FindByOrderNo(no,&demo)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage":err.Error(),
@@ -400,7 +436,9 @@ func ShowJinZhuByOrderTime(c *gin.Context) {
 		b = true
 	}
 	demos := make([]model.DemoOrder,100)
-	err := db.JzAdo.OrderCreateTime(&demos,b)
+	JzAdo ,f:= db.NewJinZhuDao()
+	defer f()
+	err := JzAdo.OrderCreateTime(&demos,b)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"errMessage": err.Error(),

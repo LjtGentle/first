@@ -520,7 +520,8 @@ func (sevenCom *Seven) straightFlush() (result int) {
 
 // PokerMan 7张的主函数
 func PokerMan() {
-	file := "../resources/seven_cards_with_ghost.json"
+	file := fire.GetCurrentAbPathByCaller()
+	file += "/resources/seven_cards_with_ghost.json"
 	alices := make([]string, 1024)
 	bobs := make([]string, 1024)
 	results := make([]int, 1024)

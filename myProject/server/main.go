@@ -14,7 +14,9 @@ var (
 	g errgroup.Group
 )
 func main() {
-	db.JzAdo.InitTable(&model.DemoOrder{})
+	JzAdo ,f:= db.NewJinZhuDao()
+	JzAdo.InitTable(&model.DemoOrder{})
+	f()
 	server01 := &http.Server{
 		Addr:              ":8000",
 		Handler:           router.Router01(),

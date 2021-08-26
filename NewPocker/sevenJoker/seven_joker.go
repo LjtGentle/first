@@ -786,8 +786,9 @@ func (sevenJoker *comSevenJoker) SingleCard() (result int) {
 
 // PokerMan 7张加癞子的主函数
 func PokerMan() {
-	filePath := "../resources/seven_cards_with_ghost.result.json"
-	alices, bobs, results := fire.ReadFile(filePath)
+	file := fire.GetCurrentAbPathByCaller()
+	file += "/resources/seven_cards_with_ghost.result.json"
+	alices, bobs, results := fire.ReadFile(file)
 	t1 := time.Now()
 	k := 0
 	for i := 0; i < len(alices); i++ {
